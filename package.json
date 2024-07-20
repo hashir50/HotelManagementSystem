@@ -1,0 +1,12 @@
+{
+  "name": "hotelmanagementsystem",
+  "version": "1.0.0",
+  "description": "\"LuxuryStay Hospitality\", a high-end hotel chain known for its exceptional service and luxurious accommodations. With a network of hotels in various locations, LuxuryStay aims to revolutionize its operational efficiency by implementing a cutting-edge Hotel Management System (HMS).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
