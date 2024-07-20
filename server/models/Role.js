@@ -1,22 +1,21 @@
-import {schema,model} from 'mongoose';
-
+import { schema, model } from 'mongoose';
 
 const roleSchema = new Schema(
     {
-        name:{
+        name: {
             type: String,
             required: true,
         },
-        isActive:{
-            type:Boolean
+        isActive: {
+            type: Boolean
         },
         createdAt: {
-          type: Date,
+            type: Date,
         },
-        updatedAt:{
+        updatedAt: {
             type: Date,
         }
     }
 );
 
-export default model('Role',roleSchema);
+export default model('Role', roleSchema);
