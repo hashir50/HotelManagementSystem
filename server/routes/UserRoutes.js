@@ -1,5 +1,6 @@
 import { Router } from "express";
 import User from "../models/User.js";
+import Role from "../models/Role.js";
 import bcrypt from 'bcrypt';
 import moment from 'moment-timezone';
 
@@ -26,6 +27,38 @@ userRoutes.get('/', async (req, res) => {
     res.json(usersWithLocalTime);
 }
 );
+// Get users by role name
+userRoutes.get('/role/:roleName', async (req, res) => {
+    try {
+        const roleName = req.params.roleName;
+        
+        // Find the role by name
+        const role = await Role.findOne({ name: roleName });
+
+        if (!role) {
+            return res.status(404).json({ error: 'Role not found' });
+        }
+
+        // Find users with the role ID
+        const users = await User.find({ role: role._id }).populate('role');
+        const usersWithLocalTime = users.map(user => {
+            return {
+                ...user.toObject(),
+                createdAt: convertToLocalTime(user.createdAt),
+                updatedAt: convertToLocalTime(user.updatedAt),
+                role: {
+                    ...user.role.toObject(),
+                    createdAt: convertToLocalTime(user.role.createdAt),
+                    updatedAt: convertToLocalTime(user.role.updatedAt),
+                }
+            };
+        });
+
+        res.json(usersWithLocalTime);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
 
 // create a new user
 userRoutes.post('/', async function handler(req, res) {
