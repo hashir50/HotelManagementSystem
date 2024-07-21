@@ -29,13 +29,10 @@ const userSchema = new Schema(
     },
     isActive: {
       type: Boolean
-    },
-    createdAt: {
-      type: Date,
-    },
-    updatedAt: {
-      type: Date,
     }
+  },
+  {
+      timestamps: true // This will automatically add createdAt and updatedAt fields
   }
 );
 

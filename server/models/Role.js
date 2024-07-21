@@ -1,4 +1,4 @@
-import { schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const roleSchema = new Schema(
     {
@@ -7,14 +7,12 @@ const roleSchema = new Schema(
             required: true,
         },
         isActive: {
-            type: Boolean
-        },
-        createdAt: {
-            type: Date,
-        },
-        updatedAt: {
-            type: Date,
+            type: Boolean,
+            default:true,
         }
+    },
+    {
+        timestamps: true // This will automatically add createdAt and updatedAt fields
     }
 );
 
