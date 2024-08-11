@@ -1,0 +1,28 @@
+/* UpdateForm.css */
+body {
+    background-color: #f8f9fa;
+  }
+  
+  .card {
+    border-radius: 15px;
+  }
+  
+  h2 {
+    color: #007bff;
+  }
+  
+  .form-control {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+  }
+  
+  button {
+    border-radius: 10px;
+  }
+  
+  .text-danger {
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+  }
+  

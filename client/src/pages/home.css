@@ -1,0 +1,114 @@
+.text-center {
+    text-align: center;
+   
+  }
+  
+  .card-img-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+   
+  }
+  .sec4:hover{
+    transform: scale(1.02);
+  }
+  .card-text, .card-title {
+    
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  /* src/pages/ReservationSection.css */
+
+.reservation-section {
+    padding: 2rem 0;
+  }
+  
+  .reservation-query {
+    border: 1px solid #ddd;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .contact-button {
+    margin-top: 1rem;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 50px;
+    padding: 0.5rem 2rem;
+  }
+  
+  .image-row {
+    margin-top: 2rem;
+  }
+  
+  .img-fluid {
+    height: auto;
+    max-width: 100%;
+  }
+
+  .carousel-item img {
+    max-height: 600px;
+    object-fit: cover;
+  }
+
+  /* .map-container {
+    width: 600px;
+    height: 500px;
+    border: 1px solid #ddd;
+  }
+   */
+   .contact-info {
+    margin-top: 20px;
+  }
+  
+  .contact-info .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .contact-info .info-item i {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    color: #007bff;
+  }
+  
+  .contact-info .info-item p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  form .form-control {
+    border-radius: 0;
+    border-color: #ced4da;
+    box-shadow: none;
+    font-size: 1rem;
+  }
+  
+  form .btn {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 0;
+  }
+  
+  form .btn:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+
+
+  

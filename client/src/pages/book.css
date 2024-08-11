@@ -1,0 +1,23 @@
+.header {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  .ccontainer{
+    background-color: rgb(212, 213, 227);
+  }
+  .header-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .header-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+  }
+.btnnn{
+    margin-left: 80%;
+}  

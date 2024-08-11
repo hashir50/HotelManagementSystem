@@ -1,0 +1,29 @@
+.bg-custom {
+    background-image: url('../assets/bradcam.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-image {
+    background-image: url('../assets/about_banner.png'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.form-control, .btn {
+    border-radius: 30px;
+}
+
+/* .btn-primary {
+    background-color: #ea1d6f;
+    border: none;
+} */
+
+.btn-primary:hover {
+    background-color: #008B8B;
+}
+.box{
+    background-color:#008B8B;
+}

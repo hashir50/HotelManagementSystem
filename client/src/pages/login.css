@@ -1,0 +1,45 @@
+/* .login-container {
+    height: 80vh;
+
+  } */
+  .b_box{
+    background-image: url('../assets/luxroom.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height:600px;
+ 
+  }
+  .left-panel {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    text-align: center;
+  }
+  .box{
+    background-color:#008B8B;
+  }
+  .logo {
+
+    height: 170px
+  }
+  
+  .right-panel {
+    background: url('../assets/about_banner.png') no-repeat center center;
+    background-size: cover;
+  }
+  
+  .form-control {
+    border-radius: 0.25rem;
+  }
+  
+  .btn-primary {
+    border-radius: 0.25rem;
+  }
+  /* RoomDetail */
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+  

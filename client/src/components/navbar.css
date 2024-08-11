@@ -1,0 +1,100 @@
+/* Navbar.css */
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand img {
+  height: 140px; /* Adjust the height as needed */
+  margin-right: 10px;
+  margin-left: 30px;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+  margin-right: 10px;
+  font-weight: bold;
+  transition: color 0.3s, border-bottom 0.3s !important; /* Smooth transition */
+}
+.navbar-nav .nav-link:hover {
+  color: #f8f9fa !important;
+  transform: scale(1.1);
+}
+
+.navbar-nav .nav-link.active {
+  border-bottom: 2px solid white;
+}
+
+.btn-book {
+  margin-right: 20px !important;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.btn-book:hover {
+  background-color: #0056b3; /* Darker shade of primary color on hover */
+  color: #fff; /* Ensure text is readable */
+}
+
+.navbar {
+  background: transparent;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+.bg-img {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; 
+  position: relative;
+}
+
+.overlay h1 {
+  color: white;
+  margin: 0;
+  padding-top: 650px; /* Adjust as needed */
+  font-size: 3rem; /* Increase font size for better visibility */
+  transition: transform 0.3s; /* Smooth transition */
+}
+
+.overlay p {
+  color: white;
+  margin: 0;
+  font-size: 1.5rem; /* Increase font size for better readability */
+  transition: opacity 0.3s; /* Smooth transition */
+}
+
+.overlay p:hover {
+  opacity: 0.8; /* Slightly reduce opacity on hover for a subtle effect */
+}
+
+/* Make the logo smaller and ensure it's visible on all screens */
+.logo-sm {
+  height: 60px; /* Adjust as needed */
+  max-width: 100%;
+}
+
+/* Adjust off-canvas menu */
+.offcanvas {
+  width: 250px; /* Adjust as needed */
+}
+
+/* Ensure proper positioning */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 5;
+}
+
+

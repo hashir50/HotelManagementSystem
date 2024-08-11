@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Role from "../models/Role.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Router } from "express";
@@ -18,7 +19,11 @@ authRouter.post('/login', async (req, res) => {
         if (!passwordMatch) {
             return res.status(401).json({ message: 'Invalid credentials' });
         };
-        const token = jwt.sign({ username }, user.role);
+        const token = jwt.sign(
+            { username: user.username, role: user.role }, // Payload
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: '1h' } // Token expiration
+        );
         return res.json({ message: 'Login successful', token: token },);
 
     } catch (error) {
@@ -30,23 +35,36 @@ authRouter.post('/login', async (req, res) => {
 // register a new user
 authRouter.post('/register', async (req, res) => {
     try {
-        const { username, password } = req.body;
-        // check if user exists
-        const existingUser = await User.findOne({ username });
+        const { name, email, password, contactNumber, address, role } = req.body;
+
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
-        // hash the password
+
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-        // create a new user
-        const user = new User(
-            {
-                username,
-                password: hashedPassword
+
+        let roleId = role;
+        if (!role) {
+            const guestRole = await Role.findOne({ name: 'Guest' });
+            if (guestRole) {
+                roleId = guestRole._id;
+            } else {
+                return res.status(400).json({ message: 'Default role not found' });
             }
-        );
+        }
+        const user = new User({
+            name,
+            email,
+            password: hashedPassword,
+            contactNumber,
+            address,
+            role: roleId,
+        });
+
         await user.save();
-        return res.status(201).json({ message: 'User created', "user": user });
+        return res.status(201).json({ message: 'User created', user });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });
