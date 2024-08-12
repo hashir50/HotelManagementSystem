@@ -61,7 +61,7 @@ function About() {
                 </Carousel.Item>
             </Carousel>
 
-            <Container fluid className="reservation-section mt-5 ">
+            <Container fluid className="reservation-section mt-5 overflow-hidden">
                 <Row className="justify-content-center text-center mt-5">
                     <Col md={8} className="reservation-query mb-5">
                         <h4>For Reservation or Query?</h4>

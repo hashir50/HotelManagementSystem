@@ -1,12 +1,28 @@
 .sec1 {
   margin-left: 20px;
 }
+.btn-custom{
+  border: 2px solid #fff;
+  background: transparent;
+  border-radius: 0px;
+  padding: 4px 14px;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease; 
+  text-decoration: auto;
+}
+
+.btn-custom:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  color: #000;
+  background-color: #fff;
+
+}
 
 .custom-button {
   background-color: #fff;
-  /* Adjust the background color as needed */
   border-color: #007bff;
-  /* Adjust the border color as needed */
   color: #007bff;
   font-size: 1rem;
   padding-left: 110px;

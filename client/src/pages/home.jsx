@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -16,10 +16,27 @@ import sec5Img5 from '../assets/sec5Img5.png';
 import Footer from '../components/footer';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Home() {
   const [show, setShow] = useState(false);
+  const [roomTypes, setRoomTypes] = useState([]);
 
+  useEffect(() => {
+    // Fetch room types from API
+    const fetchRoomTypes = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/roomTypes');
+        setRoomTypes(response.data);
+      } catch (error) {
+        console.error('Error fetching room types:', error);
+      }
+    };
+
+    fetchRoomTypes();
+  }, []);
+
+ 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const RoomCard = ({ imgSrc, title, price }) => (
@@ -167,24 +184,15 @@ function Home() {
 
       <Container fluid>
         <Row>
-          <Col md={6} className="p-0 sec4">
-            <RoomCard imgSrc={sec4Img1} title="Superior Room" price="250" />
-          </Col>
-          <Col md={6} className="p-0 sec4">
-            <RoomCard imgSrc={sec4Img2} title="Deluxe Room" price="250" />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6} className="p-0 sec4">
-            <RoomCard imgSrc={sec4Img3} title="Signature Room" price="250" />
-          </Col>
-          <Col md={6} className="p-0 sec4">
-            <RoomCard imgSrc={sec4Img4} title="Couple Room" price="250" />
-          </Col>
+        {roomTypes.map((room) => (
+            <Col key={room._id} md={6} className="p-0 sec4">
+              <RoomCard imgSrc={room.image} title={room.name} price={room.price || '250'} />
+            </Col>
+          ))}
         </Row>
       </Container>
 
-      <Container fluid className="reservation-section mt-5 ">
+      <Container fluid className="reservation-section mt-5 overflow-hidden">
     <Row className="justify-content-center text-center mt-5">
       <Col md={8} className="reservation-query mb-5">
         <h4>For Reservation or Query?</h4>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './register.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,9 +7,21 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '../ValidationSchema/RegisterValSchema';
-
-function Register() {
+import {  getSession, isSessionExpired } from '../utils/Session';
+function Register() { 
     const navigate = useNavigate();
+    useEffect(() => {
+       const session = getSession();
+
+       if (session && !isSessionExpired()) {
+           // Redirect based on role
+           if (session.role === 'admin') {
+               navigate('/admin'); // Redirect to admin dashboard
+           } else {
+               navigate('/'); // Redirect to home page
+           }
+       }
+   }, [navigate]);
     const {
         register,
         handleSubmit,

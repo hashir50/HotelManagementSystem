@@ -20,10 +20,17 @@ authRouter.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         };
         const token = jwt.sign(
-            { username: user.username, role: user.role }, // Payload
+            { userId :user._id,username: user.name, role: user.role.name }, 
             process.env.JWT_SECRET_KEY,
-            { expiresIn: '1h' } // Token expiration
+            { expiresIn: '1h' } 
         );
+         // Set HTTP-only cookie
+        // res.cookie('token', token, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === 'production', // Set to true in production
+        //     sameSite: 'Strict', // Adjust as necessary
+        //     maxAge: 3600000 // 1 hour
+        // });
         return res.json({ message: 'Login successful', token: token },);
 
     } catch (error) {

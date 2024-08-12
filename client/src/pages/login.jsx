@@ -1,12 +1,13 @@
-import React from "react";
+import React,{useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './login.css';
 import logo from '../assets/logo.png';
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
+import { saveSession, getSession, isSessionExpired } from '../utils/Session';
 
 // Validation schema
 const validationSchema = Yup.object({
@@ -15,11 +16,27 @@ const validationSchema = Yup.object({
 });
 
 function Login() {
+    
+    const navigate = useNavigate();
+     useEffect(() => {
+        const session = getSession();
+
+        if (session && !isSessionExpired()) {
+            // Redirect based on role
+            if (session.role === 'admin') {
+                navigate('/admin'); // Redirect to admin dashboard
+            } else {
+                navigate('/'); // Redirect to home page
+            }
+        }
+    }, [navigate]);
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         try {
             const response = await axios.post('http://localhost:3000/api/auth/login', values);
             
             console.log(response.data); // Handle success, e.g., redirect to home or store token
+            saveSession(response.data.token); // Save token using session utility
+            navigate('/'); 
         } catch (error) {
             if (error.response && error.response.data) {
                 // Handle server errors

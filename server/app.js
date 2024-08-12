@@ -2,10 +2,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import userRoutes from './routes/UserRoutes.js';
 import authRoutes from './routes/AuthRoutes.js';
 import roleRoutes from './routes/RoleRoutes.js';
+import roomTypeRoutes from './routes/RoomTypeRoutes.js';
 
 
 
@@ -14,6 +16,7 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 async function connectToDB() {
     try {
@@ -29,6 +32,7 @@ connectToDB();
 app.use('/api/users', userRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/roomTypes', roomTypeRoutes);
 
 app.get('/',(req,res)=>{res.send(`<h1>Hello World!</h1>`) });
 app.listen(port, () => {

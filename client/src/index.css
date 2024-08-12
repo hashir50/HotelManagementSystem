@@ -1,0 +1,8 @@
+.btn-custom{
+    border: 2px solid #fff;
+    background: transparent;
+    border-radius: 0px;
+    padding: 4px 14px;
+    color: white;
+    font-weight: bold;
+}
