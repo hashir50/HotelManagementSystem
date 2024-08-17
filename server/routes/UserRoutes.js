@@ -2,6 +2,7 @@ import { Router } from "express";
 import User from "../models/User.js";
 import Role from "../models/Role.js";
 import bcrypt from 'bcrypt';
+import { check, validationResult } from 'express-validator';
 import moment from 'moment-timezone';
 
 const userRoutes = Router();
@@ -9,111 +10,89 @@ const convertToLocalTime = (date) => {
     return moment(date).tz('Asia/Karachi').format();
 };
 
+// Middleware for validation
+const userValidation = [
+    check('name').notEmpty().withMessage('Name is required'),
+    check('email').isEmail().withMessage('Invalid email format'),
+    check('contactNumber').notEmpty().withMessage('Contact Number is required'),
+    check('role').notEmpty().withMessage('Role is required')
+];
+
 // get all users
 userRoutes.get('/', async (req, res) => {
-    var users = await User.find().populate('role');
-    var usersWithLocalTime = users.map(user => {
-        return {
-            ...user.toObject(),
-            createdAt: convertToLocalTime(user.createdAt),
-            updatedAt: convertToLocalTime(user.updatedAt),
-            role: {
-                ...user.role.toObject(),
-                createdAt: convertToLocalTime(user.role.createdAt),
-                updatedAt: convertToLocalTime(user.role.updatedAt),
-            }
-        };
-    });
-    res.json(usersWithLocalTime);
-}
-);
-// Get users by role name
-userRoutes.get('/role/:roleName', async (req, res) => {
     try {
-        const roleName = req.params.roleName;
-        
-        // Find the role by name
-        const role = await Role.findOne({ name: roleName });
-
-        if (!role) {
-            return res.status(404).json({ error: 'Role not found' });
-        }
-
-        // Find users with the role ID
-        const users = await User.find({ role: role._id }).populate('role');
-        const usersWithLocalTime = users.map(user => {
-            return {
-                ...user.toObject(),
-                createdAt: convertToLocalTime(user.createdAt),
-                updatedAt: convertToLocalTime(user.updatedAt),
-                role: {
-                    ...user.role.toObject(),
-                    createdAt: convertToLocalTime(user.role.createdAt),
-                    updatedAt: convertToLocalTime(user.role.updatedAt),
-                }
-            };
-        });
-
-        res.json(usersWithLocalTime);
+        const users = await User.find().populate('role');
+        res.status(200).json(users);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: 'Failed to retrieve users by role. Please try again later.' });
     }
 });
 
 // create a new user
-userRoutes.post('/', async function handler(req, res) {
+userRoutes.post('/', userValidation, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
-        const { body } = req;
-        // hash the password
+        const { name, email, contactNumber, address, role, password } = req.body;
+
+        // Check if email already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
+        // Hash the password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(body.password, salt);
-        var user = new User(
-            {
-                name:body.name,
-                email: body.email,
-                password: hashedPassword,
-                contactNumber: body.contactNumber,
-                address: body.address,
-                role: body.roleId
-            }
-        );
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const user = new User({
+            name,
+            email,
+            password: hashedPassword,
+            contactNumber,
+            address,
+            role: role
+        });
+
         await user.save();
-        res.status(201).json();
+        res.status(201).json(user);
+    } catch (error) {
+        res.status(400).json({ error: 'Failed to create user. ' + error.message });
     }
-    catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-}
-);
+});
 
 // delete a user
-userRoutes.delete('/:id', async function handler(req, res) {
+userRoutes.delete('/:id', async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
         res.json(user);
+    } catch (error) {
+        res.status(400).json({ error: 'Failed to delete user. ' + error.message });
     }
-    catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-}
-);
+});
 
 // update a user
-userRoutes.put('/:id', async function handler(req, res) {
+userRoutes.put('/:id', userValidation, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body);
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
         res.json(user);
+    } catch (error) {
+        res.status(400).json({ error: 'Failed to update user. ' + error.message });
     }
-    catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-}
-);
+});
 
 export default userRoutes;

@@ -4,7 +4,6 @@ import Home from './pages/home';
 import Room from './pages/room';
 import About from './pages/about';
 import Contact from './pages/contact';
-import Bookroom from './pages/roomdetail';
 import Login from './pages/login';
 import Register from './pages/register';
 import CheckAvailabilityForm from './pages/checkavail';
@@ -12,6 +11,12 @@ import RoomDetailsPage from './pages/roomdetail';
 import Book from './pages/book';
 import UserProfile from './pages/userprofile';
 import UpdateForm from './pages/update';
+import AdminLayout from './components/adminLayout';
+import AdminDashboard from './pages/admin/adminDashboard';
+import User from './pages/admin/user.jsx';
+import Role from './pages/admin/role.jsx';
+import RoomType from './pages/admin/roomType.jsx';
+import Rooms from './pages/admin/room.jsx';
 
 const AppRoutes = () => (
   <Routes>
@@ -26,9 +31,15 @@ const AppRoutes = () => (
     <Route path="/book" element={< Book/>} />
     <Route path="/user" element={< UserProfile/>} />
     <Route path="/update" element={< UpdateForm/>} />
-
-
+    <Route path="/admin" element={<AdminLayout />}>
+      <Route index element={<AdminDashboard />} />
+      <Route path="users" element={<User />} />
+      <Route path="roles" element={<Role />} />
+      <Route path="roomTypes" element={<RoomType />} />
+      <Route path="rooms" element={<Rooms />} />
+    </Route>
   </Routes>
+
 );
 
 export default AppRoutes;

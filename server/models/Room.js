@@ -8,6 +8,7 @@ const roomSchema = new Schema(
         },
         status: {
             type: String,
+            enum: ['Available', 'Occupied', 'Maintenance', 'Closed'],
             required: true,
         },
         type: {
@@ -27,12 +28,18 @@ const roomSchema = new Schema(
             ref: 'User',
             required: true,
         },
+        createdBy: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
         createdAt: {
             type: Date,
+            default: Date.now,
             required: true
         },
         updatedAt: {
-            type: Date,
+            type: Date
         },
         updatedBy: {
             type: Schema.Types.ObjectId,

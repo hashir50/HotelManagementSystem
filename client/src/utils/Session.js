@@ -16,6 +16,7 @@ export const getSession = () => {
                 token,
                 username: decoded.username,
                 role: decoded.role,
+                userId: decoded.userId,
                 expiresAt: decoded.exp // JWT expiration time
             };
         } catch (error) {

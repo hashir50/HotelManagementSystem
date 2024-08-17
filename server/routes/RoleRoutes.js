@@ -20,5 +20,27 @@ roleRoutes.post('/', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+// Update a role
+roleRoutes.put('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, isActive } = req.body;
+        const updatedRole = await Role.findByIdAndUpdate(id, { name, isActive }, { new: true });
+        res.json(updatedRole);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Delete a role
+roleRoutes.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Role.findByIdAndDelete(id);
+        res.status(204).end();
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
 
 export default roleRoutes;

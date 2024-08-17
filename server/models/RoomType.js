@@ -22,13 +22,8 @@ const roomTypeSchema = new Schema(
             type: Date,
             required: true
         },
-        updatedAt: {
-            type: Date,
-        },
-        updatedBy: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
+        updatedBy: { type: Schema.Types.ObjectId, ref: 'User' }, // Define updatedBy if you need it
+        updatedAt: { type: Date }
     }
 );
 

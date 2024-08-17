@@ -8,8 +8,13 @@ import userRoutes from './routes/UserRoutes.js';
 import authRoutes from './routes/AuthRoutes.js';
 import roleRoutes from './routes/RoleRoutes.js';
 import roomTypeRoutes from './routes/RoomTypeRoutes.js';
+import roomRoutes from './routes/RoomRoutes.js';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
-
+// Derive __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,8 +23,11 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+
+// Connect to MongoDB
 async function connectToDB() {
     try {
+        console.log(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
         await mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
         console.log('Connected to MongoDB');
     } catch (error) {
@@ -28,13 +36,22 @@ async function connectToDB() {
 }
 connectToDB();
 
-// routes
+// Serve static files from 'uploads' directory
+app.use('/uploads', express.static(__dirname));
+
+// Define routes
 app.use('/api/users', userRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/roomTypes', roomTypeRoutes);
+app.use('/api/roomType', roomTypeRoutes);
+app.use('/api/room', roomRoutes);
 
-app.get('/',(req,res)=>{res.send(`<h1>Hello World!</h1>`) });
+// Basic route
+app.get('/', (req, res) => {
+    res.send(`<h1>Hello World!</h1>`);
+});
+
+// Start server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

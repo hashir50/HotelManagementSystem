@@ -26,7 +26,7 @@ function Home() {
     // Fetch room types from API
     const fetchRoomTypes = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/roomTypes');
+        const response = await axios.get('http://localhost:3000/api/roomType');
         setRoomTypes(response.data);
       } catch (error) {
         console.error('Error fetching room types:', error);
@@ -186,7 +186,7 @@ function Home() {
         <Row>
         {roomTypes.map((room) => (
             <Col key={room._id} md={6} className="p-0 sec4">
-              <RoomCard imgSrc={room.image} title={room.name} price={room.price || '250'} />
+              <RoomCard imgSrc={`http://localhost:3000/uploads/${room.image}`} title={room.name} price={room.price || '250'} />
             </Col>
           ))}
         </Row>
